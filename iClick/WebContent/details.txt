@@ -1,0 +1,16 @@
+compose.jsp --> compose  -->  created
+index.jsp	-->   inbox	  -->  created
+starred.jsp  -->  starred  -->  created
+important.jsp  --> important --> created
+sent.jsp  --> sent mail  -->  created
+drafts.jsp  --> drafts  -->  created
+personal.jsp  -->  personal  -->  created
+travel.jsp  -->  travel  -->  created
+all.jsp  -->  all mail  -->  created
+spam.jsp  -->  spam  -->  created
+trash.jsp  --> trash  -->  created
+receipts.jsp  --> receipts  -->  created
+work.jsp  -->  work  -->  created
+login.jsp  -->  edited in the template only
+profile.jsp  -->  contain is not change else is created i.e edited in template only
+forget passward is not created linked at #
