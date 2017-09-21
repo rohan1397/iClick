@@ -1,6 +1,8 @@
 package controller;
 
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Date;
 
 import javax.servlet.ServletException;
@@ -8,6 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import dao.Dao;
+import encryption.Encryption;
+import model.Model;
 
 /**
  * Servlet implementation class RegisterServlet
@@ -44,7 +50,7 @@ public class RegisterServlet extends HttpServlet {
 		String dob=request.getParameter("dob");
 		String gender=request.getParameter("gen");
 		String contact=request.getParameter("con");
-		String coun=request.getParameter("conu");
+		String coun=request.getParameter("country");
 		String state=request.getParameter("state");
 		String password=request.getParameter("pass");
 		String cpassword=request.getParameter("pass1");
@@ -59,13 +65,55 @@ public class RegisterServlet extends HttpServlet {
 		int y1=Integer.parseInt(s2);
 		HttpSession session=request.getSession();
 		String captcha1=(String)session.getAttribute("captcha");
+		System.out.println(fname+" "+lname+" "+contact+" "+captcha+" "+captcha1+" "+gender+" "+coun+" "+state+" "+email+" "+password+" "+dob);
 		if(password.equals(cpassword))
 		{
 			if(captcha.equals(captcha1))
 			{
 				if(y1>1950 && y-y1>=18)
 				{
-					//model part
+					String toencrypt=email+password;
+					Encryption encryption=new Encryption();
+					String encryptedpassword=encryption.encrypt(toencrypt);
+					String checkemail="Select * from register where email='"+email+"'";
+					String sql="insert into register values('"+fname+"','"+lname+"','"+email+"','"+dob+"','"+gender+"','"+contact+"','"+coun+"','"+state+"','"+encryptedpassword+"')";
+					Model m=new Model();
+					m.setFname(fname);
+					m.setLname(lname);
+					m.setEmail(email);
+					m.setDob(dob);
+					m.setContact(contact);
+					m.setCountry(coun);
+					m.setState(state);
+					m.setPassword(encryptedpassword);
+					Dao dao=new Dao();
+					try {
+					ResultSet rs=dao.select(m,checkemail);
+					
+						if(rs.next())
+						{
+							page="error.jsp?msg=mailidalreadyregister";
+						}
+						else
+						{
+							System.out.println("check done");
+							int i=dao.insert(m,sql);
+							
+							if(i!=0)
+							{
+							
+								page="homepage.jsp?msg=success";
+							}
+							else
+							{
+								page="error.jsp?msg=failed";
+							}	
+						}
+					} 
+					catch (SQLException e1) 
+					{
+						e1.printStackTrace();
+					}
 				}
 				else
 				{
@@ -79,9 +127,8 @@ public class RegisterServlet extends HttpServlet {
 		}
 		else
 		{
-			page="error.jsp?msg=password";
+			page="error.jsp?msg=password";	
 		}
 	response.sendRedirect(page);
 	}
-
 }
