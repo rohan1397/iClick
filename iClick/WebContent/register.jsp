@@ -78,7 +78,7 @@
 			
 		<div class="input-group">	          
 			<span class="input-group-addon"><i class="fa fa-globe"></i></span>
-			<select class="form-control m-bot15" name="coun" id="country" required="required" ></select>
+			<select class="form-control m-bot15" name="country" id="country" required="required" ></select>
 								</div>			
 		<div class="input-group">	          
 			<span class="input-group-addon"><i class="fa fa-globe"></i></span>
@@ -97,7 +97,7 @@
 			<div class="input-group">
                 <span class="input-group-addon"><i class="icon_key_alt"></i></span>
                 
-                <input type="text" class="form-control" name="Captcha" placeholder="Captcha" required="required" >
+                <input type="text" class="form-control" name="captcha" placeholder="Captcha" required="required" >
             </div>
 		
             <label class="checkbox">
