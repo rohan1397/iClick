@@ -29,6 +29,20 @@
 		<servlet-name>DeleteServlet</servlet-name>
 		<servlet-class>controller.DeleteServlet</servlet-class>
 	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>DivServlet</display-name>
+		<servlet-name>DivServlet</servlet-name>
+		<servlet-class>controller.DivServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>ComposeServlet</display-name>
+		<servlet-name>ComposeServlet</servlet-name>
+		<servlet-class>controller.ComposeServlet</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>RegisterServlet</servlet-name>
 		<url-pattern>
@@ -43,6 +57,16 @@
 		<servlet-name>DeleteServlet</servlet-name>
 		<url-pattern>
 		/DeleteServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>DivServlet</servlet-name>
+		<url-pattern>
+		/DivServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ComposeServlet</servlet-name>
+		<url-pattern>
+		/ComposeServlet</url-pattern>
 	</servlet-mapping>
 	
 	<welcome-file-list>

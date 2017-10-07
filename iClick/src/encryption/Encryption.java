@@ -2,7 +2,7 @@ package encryption;
 
 public class Encryption {
 
-	public String encrypt(String e)
+	public static String encrypt(String e)
 	{
 		int length=e.length();
 		String pass=" ";
@@ -16,6 +16,7 @@ public class Encryption {
 			encryptkey[i]=(char)stringtoint;
 		}
 		pass=String.valueOf(encryptkey);
+		System.out.println(pass);
 		return pass;
 	}
 	public String dencrypt(String password)

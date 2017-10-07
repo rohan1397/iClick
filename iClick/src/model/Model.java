@@ -1,5 +1,7 @@
 package model;
 
+import javax.crypto.SecretKey;
+
 public class Model {
 private String fname;
 private String lname;
@@ -10,6 +12,49 @@ private String country;
 private String state;
 private String password;
 private String dob;
+private String sender;
+private String receiver;
+private String cc;
+private String subject;
+private String body;
+private SecretKey key;
+
+public SecretKey getKey() {
+	return key;
+}
+public void setKey(SecretKey seckey) {
+	this.key = seckey;
+}
+public String getSender() {
+	return sender;
+}
+public void setSender(String sender) {
+	this.sender = sender;
+}
+public String getReceiver() {
+	return receiver;
+}
+public void setReceiver(String receiver) {
+	this.receiver = receiver;
+}
+public String getCc() {
+	return cc;
+}
+public void setCc(String cc) {
+	this.cc = cc;
+}
+public String getSubject() {
+	return subject;
+}
+public void setSubject(String subject) {
+	this.subject = subject;
+}
+public String getBody() {
+	return body;
+}
+public void setBody(String body) {
+	this.body = body;
+}
 public String getDob() {
 	return dob;
 }
@@ -61,8 +106,8 @@ public void setState(String state) {
 public String getPassword() {
 	return password;
 }
-public void setPassword(String password) {
-	this.password = password;
+public void setPassword(String seckey) {
+	this.password = seckey;
 }
 
 

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.crypto.SecretKey;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -31,31 +32,43 @@ public class LoginServlet extends HttpServlet {
 		String email=request.getParameter("email");
 		String password=request.getParameter("password");
 		String page=" ";
+		
+		String seckey =null;
+			
 		if(email.equals("") || password.equals(""))
 		{
 			page="error.jsp?msg=can'tnull";
 		}
 		else
-		{	String toencrypt=email+password;
-			Encryption encryption=new Encryption();
-			String encryptedpassword=encryption.encrypt(toencrypt);
-			String sql="select * from register where email='"+email+"' and password='"+encryptedpassword+"'";
+		{	System.out.println("else part");
+		seckey = Encryption.encrypt(password+email);
+			String key="select * from register where email='"+email+"' and password='"+seckey+"'";
+			//String sql="select * from register where email='"+email+"' and password='"+encryptedpassword+"'";
 			Model m=new Model();
 			m.setEmail(email);
-			m.setPassword(password);
-			Dao dao=new Dao();
+			m.setPassword(seckey);
+			System.out.println(seckey);
+			
+				System.out.println("else part");
+			ResultSet rs;
 			try {
-			ResultSet rs=dao.select(m, sql);
+				rs = Dao.select(m, key);
+			 
 			if(rs.next())
-			{
-				page="Welcome.jsp";
+			{		
+					
+					page="dashbaord.jsp";	
 			}
-			} 
-			catch (SQLException e) 
+			else
 			{
+				System.out.println("error");
+			}
+			}
+			catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			 
 		}
 		response.sendRedirect(page);
 	}

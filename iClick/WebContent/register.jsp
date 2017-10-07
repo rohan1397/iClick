@@ -33,7 +33,7 @@
 
 </head>
   <body class="login-img3-body">
-
+<jsp:include page="index1.jsp"></jsp:include>
     <div class="container">
 
       <form class="login-form" action="RegisterServlet" method="post" name="register" onsubmit="return formValidation()">        

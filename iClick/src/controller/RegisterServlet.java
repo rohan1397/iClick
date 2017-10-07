@@ -61,6 +61,24 @@ public class RegisterServlet extends HttpServlet {
 		String s1=s.substring(24,28);
 		String s2=dob.substring(0,4);
 		int y=Integer.parseInt(s1);
+		String pass=null;
+		
+		char[] e2=email.toCharArray();
+		StringBuilder sb = new StringBuilder();
+		for(char j:e2)
+		{
+			if(j=='@')
+			{
+				break;
+			}
+			else
+			{
+				sb.append(j);
+			}
+			
+			//System.out.println(j);
+		}
+		String emailid=sb.toString();
 		//Interger w=Interger.valueOf(s)
 		int y1=Integer.parseInt(s2);
 		HttpSession session=request.getSession();
@@ -72,11 +90,16 @@ public class RegisterServlet extends HttpServlet {
 			{
 				if(y1>1950 && y-y1>=18)
 				{
-					String toencrypt=email+password;
-					Encryption encryption=new Encryption();
-					String encryptedpassword=encryption.encrypt(toencrypt);
+					pass=Encryption.encrypt(password+email);
+					
 					String checkemail="Select * from register where email='"+email+"'";
-					String sql="insert into register values('"+fname+"','"+lname+"','"+email+"','"+dob+"','"+gender+"','"+contact+"','"+coun+"','"+state+"','"+encryptedpassword+"')";
+					String sql="insert into register values('"+fname+"','"+lname+"','"+email+"','"+dob+"','"+gender+"','"+contact+"','"+coun+"','"+state+"','"+pass+"')";
+					
+					
+					String q="mail"+emailid;					
+					System.out.println("-------------"+q);
+					String sdk="CREATE TABLE "+q+"( OTHEREMAIL VARCHAR (100)  NOT NULL , STATUS INTEGER  NOT NULL , MAILDATE DATE  NOT NULL , SUBJECT VARCHAR (100) , CC VARCHAR (100) , EBODY CLOB  (10 K )  LOGGED  NOT  COMPACT , DBODYKEY VARCHAR (100) , ATTACH1 BLOB  (5 M )  LOGGED  NOT  COMPACT , ATTACH2 BLOB  (5 M )  LOGGED  NOT  COMPACT , ATTACH3 BLOB  (5 M )  LOGGED  NOT  COMPACT   ) ";
+					System.out.println(sdk);
 					Model m=new Model();
 					m.setFname(fname);
 					m.setLname(lname);
@@ -85,10 +108,9 @@ public class RegisterServlet extends HttpServlet {
 					m.setContact(contact);
 					m.setCountry(coun);
 					m.setState(state);
-					m.setPassword(encryptedpassword);
-					Dao dao=new Dao();
+					m.setPassword(pass);
 					try {
-					ResultSet rs=dao.select(m,checkemail);
+					ResultSet rs=Dao.select(m,checkemail);
 					
 						if(rs.next())
 						{
@@ -97,12 +119,21 @@ public class RegisterServlet extends HttpServlet {
 						else
 						{
 							System.out.println("check done");
-							int i=dao.insert(m,sql);
+							int i=Dao.insert(m,sql);
 							
 							if(i!=0)
 							{
-							
-								page="homepage.jsp?msg=success";
+								i=Dao.insert(m,sdk);
+								if(i!=0)
+								{
+									page="homepage.jsp?msg=success";
+									System.out.println("table created");
+								}
+								else
+								{
+									page="error.jsp?msg=failed";
+								}
+								page="login.jsp?msg=success";
 							}
 							else
 							{
